@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Sunflower Day</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: linear-gradient(180deg, #87CEEB 0%, #E0F6FF 100%);
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            z-index: 2;
+            transition: opacity 1s ease-out;
+        }
+
+        h1 {
+            color: #FF6B6B;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+        }
+
+        .quote-container {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .quote {
+            font-size: 1.2rem;
+            color: #444;
+            margin: 1rem 0;
+            line-height: 1.8;
+            font-style: italic;
+        }
+
+        .button {
+            background: #FFD700;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            color: #444;
+            cursor: pointer;
+            margin: 1rem;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .button:hover {
+            transform: scale(1.05);
+        }
+
+        .garden {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 1;
+            display: none;
+        }
+
+        .sunflower {
+            position: absolute;
+            font-size: 0;
+            transform-origin: bottom center;
+            animation: growSunflower 2s ease-out forwards;
+        }
+
+        @keyframes growSunflower {
+            0% {
+                font-size: 0;
+            }
+            100% {
+                font-size: 40px;
+            }
+        }
+
+        .love-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            color: #FF6B6B;
+            opacity: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Happy Sunflower Day! 🌻</h1>
+        <div class="quote-container">
+            <div class="quote">
+                "Like a sunflower follows the sun, my heart follows you. You bring light and warmth to my every day, making my world brighter just by being in it."
+            </div>
+        </div>
+        <button class="button" onclick="plantGarden()">Let's grow a garden together</button>
+    </div>
+    <div class="garden"></div>
+
+    <script>
+        function createSunflower(x, y, delay) {
+            const sunflower = document.createElement('div');
+            sunflower.className = 'sunflower';
+            sunflower.style.left = x + 'px';
+            sunflower.style.bottom = y + 'px';
+            sunflower.style.animationDelay = delay + 's';
+            sunflower.innerHTML = '🌻';
+            return sunflower;
+        }
+
+        function plantGarden() {
+            // Hide the initial content
+            document.querySelector('.container').classList.add('hidden');
+
+            const garden = document.querySelector('.garden');
+            garden.style.display = 'block';
+            garden.innerHTML = ''; // Clear any existing sunflowers
+            
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+
+            // Create a grid of sunflowers
+            for (let i = 0; i < width; i += 80) {
+                for (let j = 0; j < height; j += 80) {
+                    const delay = Math.random() * 2;
+                    const offsetX = Math.random() * 20 - 10;
+                    const offsetY = Math.random() * 20 - 10;
+                    const sunflower = createSunflower(i + offsetX, j + offsetY, delay);
+                    garden.appendChild(sunflower);
+                }
+            }
+
+            // Create and show the love message
+            setTimeout(() => {
+                const message = document.createElement('div');
+                message.className = 'love-message';
+                message.innerHTML = 'I love you ❤️';
+                message.style.animation = 'fadeIn 2s ease-out forwards';
+                document.body.appendChild(message);
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
